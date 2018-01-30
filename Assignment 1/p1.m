@@ -18,10 +18,11 @@ end
 X_l1 = X(find(Y == l1), :);
 X_l2 = X(find(Y == l2), :);
 
-%create new Y vectors for l1/l2 with the same size X_l1/Xl2 with the new class value
+%create new Y vectors for l1/l2 with the same size X_l1/Xl2 with the new classified value
 Y_l1 = ones(size(X_l1, 1), 1) * y_value_l1;
 Y_l2 = ones(size(X_l2, 1), 1) * y_value_l2;
 
+%combine together as X_out and Y_out
 X_out = [X_l1; X_l2];
 Y_out = [Y_l1; Y_l2];
 % =========================================================================
