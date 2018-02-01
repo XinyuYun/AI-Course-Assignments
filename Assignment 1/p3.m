@@ -8,6 +8,13 @@ function C = p3(X_train, Y_train, X_test, k)
 % ====================== My IMPLEMENTATION HERE ===========================
 %initialize vector C
 C = zeros(size(X_test, 1));
+%compute distances(without sqrt) from each element in X_test to all elements in X_train
+distance_matrix = X_test.^2 * (X_train.^2)'
+
+%
+
+
+
 
 % =========================================================================
 end
