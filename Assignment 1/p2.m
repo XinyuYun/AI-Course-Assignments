@@ -6,8 +6,9 @@ function [err,CONF] = p2(C,T)
 %         CONF is an m by m matrix where CONF(i,j) is the number of examples of class i that are classified as class j.
 
 % ====================== My IMPLEMENTATION HERE ===========================
+%get the error rate by sum unequaled elements between C and T
 err = sum(C ~= T)/size(C , 1);
-%get the m value to set the CONF size
+%get the maximum integer value from T to set the CONF size
 m = size(unique(T), 1);
 %initial CONF matrix as m*m zeros
 CONF = zeros(m, m);

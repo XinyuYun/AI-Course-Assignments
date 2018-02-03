@@ -17,15 +17,8 @@ for row = 1:size(X_test, 1)
     %sort the distance result    
     [Y, I] = sort(distance);
     %get top k labels from Y_train, and use mode function to get most
-    %frequent label then save it to C(row)
+    %frequent label then save it to current row of C
     C(row) = mode(Y_train(I(1:k)));
 end
-
-
-%
-
-
-
-
 % =========================================================================
 end
