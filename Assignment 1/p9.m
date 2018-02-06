@@ -7,6 +7,8 @@ function W = p9(X_train, Y_train, iterNum, wInit, alpha)
 %           alpah - fixed learning rate
 % Outputs   w - best weights w (size(d + 1) × 1) you find
 % ====================== My IMPLEMENTATION HERE ===========================
-
+%define nested softmax function
+    V = function softmax(V)
+    end
 % =========================================================================
 end
