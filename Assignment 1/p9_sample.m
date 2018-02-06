@@ -1,46 +1,6 @@
-X = [1 2; -1 4; 3 2; 1 7; 3 5; 4 6; 9 8]
-
-%X =
-% 
-%      1     2
-%     -1     4
-%      3     2
-%      1     7
-%      3     5
-%      4     6
-%      9     8
-%      
-
-Y = [4; 1 ; 3; 2; 3; 3; 1]
-
-% Y =
-% 
-%      4
-%      1
-%      3
-%      2
-%      3
-%      3
-%      1
-
-
-iterNum = 1;
-alpha = 0.1;
-Winit = [ 1 2 -1; 1 2 -1;1 1 -2; -1 2 1]
-
-% Winit =
-% 
-%      1     2    -1
-%      1     2    -1
-%      1     1    -2
-%     -1     2     1
-
-
-W = p9(X,Y,iterNum,Winit,alpha)
-% 
-% W =
-% 
-%     1.1287    2.5735   -0.0893
-%     0.9724    1.7103   -0.8936
-%     1.2022    1.1267   -1.4779
-%    -1.3033    1.5896   -0.5392
+load A1;
+%random m * (d+1)
+wInit = randn(max(unique(Y_train)), size(X_train, 2)+1);
+W_train = p9(X_train, Y_train, 100, wInit, 0.01);
+[train_err, train_FONF] = p2(p7(W_train, X_train), Y_train)
+[test_err, test_CONF] = p2(p7(W_train, X_test), Y_test)
