@@ -30,4 +30,5 @@ for iteration = 1 : iterNum
         W = W + alpha*((new_Y_train(:, i)-softmax(W*X_train(i,:)'))*X_train(i,:));
     end
 end
+% =========================================================================
 end

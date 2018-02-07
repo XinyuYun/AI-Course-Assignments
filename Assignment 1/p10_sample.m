@@ -78,14 +78,12 @@ Y_test = [4;1;3]
 %     0     0     0     1
 %    0     0     0     1
 %
-%   Side comment: the network outputs clasification vector Y_out
-%    I'm showing what Y_out is in my case, although it is not one of the
-%    required input/output for p10_b
-%
-%  Y_out =
-%
-%     4
-%     4
-%     4
+
+load A1;
+H = [100];
+regularizerWeight = 0.8;
+[net,valErr] = p10a(X_train,Y_train, H, regularizerWeight);
+fprintf("validition error is %f", valErr);
 
 
+[err,CONF] = p10b(X_test,Y_test,net)

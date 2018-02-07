@@ -9,7 +9,7 @@ function [err,CONF] = p2(C,T)
 %get the error rate by sum unequaled elements between C and T
 err = sum(C ~= T)/size(C , 1);
 %get the maximum integer value from T to set the CONF size
-m = size(unique(T), 1);
+m = max(T);
 %initial CONF matrix as m*m zeros
 CONF = zeros(m, m);
 % get the liner indexing values of CONF by C and T
