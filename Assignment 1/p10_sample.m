@@ -79,11 +79,13 @@ Y_test = [4;1;3]
 %    0     0     0     1
 %
 
-load A1;
-H = [100];
-regularizerWeight = 0.8;
-[net,valErr] = p10a(X_train,Y_train, H, regularizerWeight);
-fprintf("validition error is %f", valErr);
-
-
-[err,CONF] = p10b(X_test,Y_test,net)
+%
+experiment_record = [];
+for first_layer_unit = 1:100
+    for second_layer_unit = 1:100
+        for regularizerWeight = [0.1:0.1:1]
+            [net,valErr] = p10a(X_train,Y_train, [first_layer_unit, second_layer_unit], regularizerWeight);
+            experiment_record = [experiment_record; [first_layer_unit, second_layer_unit, regularizerWeight, valErr]];
+        end
+    end
+end
