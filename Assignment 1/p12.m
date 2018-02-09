@@ -6,16 +6,16 @@ function C = p12(X_test)
     function g = sigmoid(z)
         g = 1.0 ./ (1.0 + exp(-z));
     end
-    function [J, grad] = lrCostFunction(theta, X, y, lambda)
+    function [J, grad] = lrCostFunction(weight, X, y, lambda)
         m = length(y); % number of training examples
 
         % You need to return the following variables correctly 
         J = 0;
-        grad = zeros(size(theta));
-        temp = theta;
+        grad = zeros(size(weight));
+        temp = weight;
         temp(1) = 0;
-        J = sum(((-1*y).*log(sigmoid(X*theta))) - (ones(size(y,1),1) - y).*log(ones(size(y,1),1)-sigmoid(X*theta)))/m + lambda/(2*m)*sum(temp.^2);
-        grad = ((sigmoid(X*theta)-y)'*X)'/m;
+        J = sum(((-1*y).*log(sigmoid(X*weight))) - (ones(size(y,1),1) - y).*log(ones(size(y,1),1)-sigmoid(X*weight)))/m + lambda/(2*m)*sum(temp.^2);
+        grad = ((sigmoid(X*weight)-y)'*X)'/m;
         grad = grad + (lambda.*temp)/m;
     end
     %load A1_full as training set
@@ -37,14 +37,9 @@ for c = 1: num_labels
     all_weights(c,:) = weight;
 end
 %validate with X_test_full and Y_test_full
-X_test_full = [ones(size(X_test_full, 1),1) X_test_full];
-[Y, val_C] = max(sigmoid(X_test_full*all_weights'), [], 2);
-[val_err, val_CONF] = p2(val_C, Y_test_full);
-%[val_err, val_CONF] = p2(p7(all_weights, X_test_full), Y_test_full);
-fprintf("bias lambda is %f, validation error in X_test_full is %f\n", lambda, val_err);
+[val_err, val_CONF] = p2(p7(all_weights, X_test_full), Y_test_full);
+fprintf("validation error in X_test_full is %f\n", val_err);
 %predict with trained weights
-%C = p7(all_weights, X_test);
-X_test = [ones(size(X_test, 1), 1) X_test];
-[Y, C] = max(sigmoid(X_test*all_weights'), [], 2);
+C = p7(all_weights, X_test);
 
 end
