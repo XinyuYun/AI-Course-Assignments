@@ -14,13 +14,8 @@ function C = p12(X_test)
         grad = zeros(size(theta));
         temp = theta;
         temp(1) = 0;
-
         J = sum(((-1*y).*log(sigmoid(X*theta))) - (ones(size(y,1),1) - y).*log(ones(size(y,1),1)-sigmoid(X*theta)))/m + lambda/(2*m)*sum(temp.^2);
-
-        % =============================================================
-
         grad = ((sigmoid(X*theta)-y)'*X)'/m;
-
         grad = grad + (lambda.*temp)/m;
     end
     %load A1_full as training set
@@ -31,9 +26,9 @@ load ('A1_full.mat', 'X_train_full','Y_train_full', 'X_test_full', 'Y_test_full'
 m = size(X_train_full, 1);%samples
 n = size(X_train_full, 2);%features
 num_labels = 10; 
-lambda = 0.1;
+lambda = 0.8;
 X_train_full = [ones(m,1) X_train_full];
-% using fmincg to get best weights
+% using fmincg to get optimal weights
 all_weights = zeros(num_labels, n + 1);
 initial_weight = randn(n+1,1);
 options = optimset('GradObj', 'on', 'MaxIter', 50);
@@ -42,9 +37,14 @@ for c = 1: num_labels
     all_weights(c,:) = weight;
 end
 %validate with X_test_full and Y_test_full
-[val_err, val_CONF] = p2(p7(all_weights, X_test_full), Y_test_full);
-fprintf("validation error in X_test_full is %f\n", val_err);
+X_test_full = [ones(size(X_test_full, 1),1) X_test_full];
+[Y, val_C] = max(sigmoid(X_test_full*all_weights'), [], 2);
+[val_err, val_CONF] = p2(val_C, Y_test_full);
+%[val_err, val_CONF] = p2(p7(all_weights, X_test_full), Y_test_full);
+fprintf("bias lambda is %f, validation error in X_test_full is %f\n", lambda, val_err);
 %predict with trained weights
-C = p7(all_weights, X_test);
+%C = p7(all_weights, X_test);
+X_test = [ones(size(X_test, 1), 1) X_test];
+[Y, C] = max(sigmoid(X_test*all_weights'), [], 2);
 
 end

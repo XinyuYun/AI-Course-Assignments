@@ -1,4 +1,4 @@
-function [err, CONF] = p10b(X_test, Y_test, net)
+function [row, col] = p10b(X_test, Y_test, net)
 % Function p10b trains a neural network using matlab function patternnet 
 % Inputs    X_test - an input training samples size n*d
 %           Y_test - their true class size n*1
@@ -13,6 +13,6 @@ X_test_new = [ones(size(X_test, 1), 1) X_test]';
 %and set the row value with largest entry in each column to be 1
 Y_predict_matrix = net(X_test_new) == max(net(X_test_new));
 [row, col] = find(Y_predict_matrix == 1);
-[err, CONF] = p2(row, Y_test);
+%[err, CONF] = p2(row, Y_test);
 % =========================================================================
 end
