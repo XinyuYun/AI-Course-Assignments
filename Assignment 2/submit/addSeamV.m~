@@ -1,2 +1,0 @@
-function imOut = addSeamV(im,seam)
-end

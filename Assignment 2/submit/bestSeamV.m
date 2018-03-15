@@ -10,9 +10,9 @@ function [seam,c] = bestSeamV(M,P)
 % ====================== My IMPLEMENTATION HERE ======================
 %get the index with min value from M's last row 
 [c, i] = min(M(end, :));
-seam(size(M, 1)) = i;
+seam(size(M, 1),:) = i;
 for row  = size(M,1):-1:2
-    seam(row-1) = P(row, seam(row));
+    seam(row-1,:) = P(row, seam(row,:));
 end
 %
 % ====================================================================
