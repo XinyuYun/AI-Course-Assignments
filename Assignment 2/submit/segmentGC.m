@@ -26,17 +26,26 @@
 
 function [segm,eng_finish]  = segmentGC(im,scribbleMask,lambda,numClusters,inftyCost)
 
+[row,col,d] = size(im);
 if(numClusters ~= 0)
-    fprintf("kmeans clustering is not implemented. \n");
-    return
+    %fprintf("kmeans clustering is not implemented. \n");
+    %return
+    R = im(:,:,1);
+    G = im(:,:,2);
+    B = im(:,:,3);
+    kmean([R(:),G(:),B(:)], numClusters);
+    
+else
+    %get the dataB & F based on inftyCoust
+    
+    %get size of scribbleMast
+    [row_m, col_m] = size(scribbleMask);
+    %generate dataB & dataF
+    dataB = (reshape(scribbleMask, [row_m * col_m, 1])==2) * inftyCost;
+    dataF = (reshape(scribbleMask, [row_m * col_m, 1])==1) * inftyCost;
 end
 
-[row,col,d] = size(im);
-%get size of scribbleMast
-[row_m, col_m] = size(scribbleMask);
-%generate dataB & dataF
-dataB = (reshape(scribbleMask, [row_m * col_m, 1])==2) * inftyCost;
-dataF = (reshape(scribbleMask, [row_m * col_m, 1])==1) * inftyCost;
+
 
 
 %compute sigma^2
