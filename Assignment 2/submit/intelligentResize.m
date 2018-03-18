@@ -15,30 +15,30 @@ im4 = cat(3, imInput(:,:,1), imInput(:,:,2), imInput(:,:,3), mask);
 F = [-1, 0, 1];
 
 totalCost = 0;
-
-if v > 0
-    for times = 1 : v
-        %vertical insert seams
-        E = computeEng(im4, F, W, maskWeight);
-        [seam,im4_temp,c] = increaseWidth(im4,E);
-        im4 = im4_temp;
-        totalCost = totalCost + c;
-    end
-elseif v < 0
-    for times = 1 : abs(v)
-        %vertical remove
-        E = computeEng(im4, F, W, maskWeight);
-        [seam,im4_temp,c] = reduceWidth(im4,E);
-        im4 = im4_temp;
-        totalCost = totalCost + c;
-    end
-end
+v_count = abs(v);
 if h > 0
     for times = 1: h
         E = computeEng(im4, F, W, maskWeight);
         [seam,im4_temp,c] = increaseHeight(im4,E);
         im4 = im4_temp;
         totalCost = totalCost + c;
+        %check if vertical resize is needed
+        if(v_count > 0)
+            if v > 0
+                %vertical insert seams
+                E = computeEng(im4, F, W, maskWeight);
+                [seam,im4_temp,c] = increaseWidth(im4,E);
+                im4 = im4_temp;
+                totalCost = totalCost + c;
+            elseif v < 0
+            %vertical remove
+            E = computeEng(im4, F, W, maskWeight);
+            [seam,im4_temp,c] = reduceWidth(im4,E);
+            im4 = im4_temp;
+            totalCost = totalCost + c;
+            end
+        v_count = v_count - 1;
+        end 
     end
 elseif h < 0
     for times = 1: abs(h)
@@ -46,8 +46,43 @@ elseif h < 0
         [seam,im4_temp,c] = reduceHeight(im4,E);
         im4 = im4_temp;
         totalCost = totalCost + c;
+        %check if vertical resize is needed
+        if(v_count > 0)
+            if v > 0
+                %vertical insert seams
+                E = computeEng(im4, F, W, maskWeight);
+                [seam,im4_temp,c] = increaseWidth(im4,E);
+                im4 = im4_temp;
+                totalCost = totalCost + c;
+            elseif v < 0
+            %vertical remove
+            E = computeEng(im4, F, W, maskWeight);
+            [seam,im4_temp,c] = reduceWidth(im4,E);
+            im4 = im4_temp;
+            totalCost = totalCost + c;
+            end
+        v_count = v_count - 1;
+        end 
     end
 end
+if(v_count > 0)
+    for index = 1 : v_count
+        if v > 0
+        %vertical insert seams
+            E = computeEng(im4, F, W, maskWeight);
+            [seam,im4_temp,c] = increaseWidth(im4,E);
+            im4 = im4_temp;
+            totalCost = totalCost + c;
+        elseif v < 0
+            %vertical remove
+            E = computeEng(im4, F, W, maskWeight);
+            [seam,im4_temp,c] = reduceWidth(im4,E);
+            im4 = im4_temp;
+            totalCost = totalCost + c;
+        end
+    end
+end
+
 imOut = im4;
 imOut(:,:,4) = [];
 % ====================================================================

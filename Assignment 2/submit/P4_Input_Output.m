@@ -468,7 +468,7 @@ imOut = addSeamV(im4,seam)
 %    101   252    31   100    69
 %    158   198   196    26   239
 
-[totalCost,imOut ] = intelligentResize(im,2,-2,W,mask,maskW)
+[totalCost,imOut ] = intelligentResize(im,3,2,W,mask,maskW)
 %      1
 % 
 %      2
