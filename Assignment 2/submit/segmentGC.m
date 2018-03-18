@@ -26,6 +26,11 @@
 
 function [segm,eng_finish]  = segmentGC(im,scribbleMask,lambda,numClusters,inftyCost)
 
+if(numClusters ~= 0)
+    fprintf("kmeans clustering is not implemented. \n");
+    return
+end
+
 [row,col,d] = size(im);
 %get size of scribbleMast
 [row_m, col_m] = size(scribbleMask);
@@ -69,13 +74,6 @@ for row_i = 1 : row
             w_pq = [w_pq; [getIndex(row, col, row_i, col_i), getIndex(row, col, row_i, col_i+1)], lambda*exp(-1*((average_channels(row_i, col_i)-average_channels(row_i,col_i+1))^2)/(2*sigma_2))];
         end
     end
-end
-
-    
-
-if(numClusters ~= 0)
-    fprintf("only support number of clusters is 0!\n");
-    exit;
 end
 
 [labels,eng_start,eng_finish] = solveMinCut(dataB',dataF',w_pq);
